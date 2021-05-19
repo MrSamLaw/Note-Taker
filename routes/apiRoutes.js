@@ -14,10 +14,18 @@ module.exports = (app) => {
         const newNote = req.body;
         newNote.id = uuidv4();
         noteData.push(newNote);
-        res.json(newNote);
-        fs.writeFile('./db/db.json', JSON.stringify(noteData), (err) => {
+        fs.writeFileSync('./db/db.json', JSON.stringify(noteData), (err) => {
             if (err) throw err;
         })
+        res.json(newNote);
     });
 
+    //API DELETE Request
+    app.delete('/api/notes/:id', (req, res) => {
+        let newNoteData = noteData.filter((note) => note.id != req.params.id);
+        fs.writeFileSync('./db/db.json', JSON.stringify(newNoteData), (err) => {
+            if (err) throw err;
+        })
+        res.json(true);
+    });
 }
