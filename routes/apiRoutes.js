@@ -13,9 +13,11 @@ module.exports = (app) => {
     app.post('/api/notes', (req, res) => {
         const newNote = req.body;
         newNote.id = uuidv4();
-        console.log(newNote);
+        noteData.push(newNote);
+        res.json(newNote);
+        fs.writeFile('./db/db.json', JSON.stringify(noteData), (err) => {
+            if (err) throw err;
+        })
     });
 
-
-    //API DELETE Request
 }
