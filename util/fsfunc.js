@@ -5,7 +5,9 @@ const readDatafile = () => {
 }
 
 const writeDatafile = (data) => {
-    fs.writeFileSync('./db/db.json', JSON.stringify(data));
+    fs.writeFileSync('./db/db.json', JSON.stringify(data), (err) => {
+        if (err) throw err;
+    });
 }
 
 module.exports = { readDatafile, writeDatafile }
